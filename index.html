@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js"></script>
+    <title>Alumnos</title>
+</head>
+<body onload="getAlumnos()">
+    <h1 id="Titulo">Listado Alumnos</h1>
+    <table id="Table">
+        <thead>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Apellido_1</th>
+            <th>Apellido_2</th>
+            <th>Direccion</th>
+            <th>Localidad</th>
+            <th>Provincia</th>
+            <th>Fecha de nacimiento</th>
+            <th>Editar/eliminar</th>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+    <input type="text" id="limit" value="10" id="limit">
+</body>
+</html>

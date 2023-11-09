@@ -1,0 +1,20 @@
+
+h1 {
+    text-align: center; 
+    background-color: #0000FF; 
+    margin-top: 0; 
+    padding: 10px 0; 
+    color: #C0C0C0;
+  }
+  
+  /* Estilo para las tablas */
+  table {
+    border-collapse: collapse; 
+    margin: auto; 
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  td, th {
+    border: 1px solid black;
+  }
+  
