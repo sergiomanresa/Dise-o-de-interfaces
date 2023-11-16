@@ -2,45 +2,53 @@
 require_once 'Silgenton.php';
 header('Content-Type: application/json');
 
-$data=json_decode(file_get_contents('php://input'), true);
+$data = json_decode(file_get_contents('php://input'), true);
 
-$action =isset($data['action'])?$data['action']:null;
+$action = isset($data['action']) ? $data['action'] : null;
 
-$limit =$data['limit'];
+$limit = isset($data['limit']) ? $data['limit'] : 10;
+
+$dni = isset($data['dni']) ? $data['dni'] : null;
 
 // valores json
-$msg=null;
-$success=true;
-$data =array();
+$msg = null;
+$success = true;
+$responseData = array();
 
-switch($action){
-    case "get":
-        try {
-            $db=DB::getInstance();
+try {
+    $db = DB::getInstance();
 
+    switch ($action) {
+        case "get":
             $sql = "select * from alumno limit $limit";
-
-            $stm=$db->prepare($sql);
-
+            $stm = $db->prepare($sql);
             $stm->execute();
-
-            $data=$stm->fetchAll(PDO::FETCH_ASSOC);
-
+            $responseData = $stm->fetchAll(PDO::FETCH_ASSOC);
             $msg = "Listado de alumnos";
-
-        }catch(Exception $e){
-            $success=false;
-        }
-        break;
+            break;
+        case "Buscar":
+            $sql = "select * from alumno where dni=:dni";
+            $stm = $db->prepare($sql);
+            $stm->bindParam(':dni', $dni);
+            $stm->execute();
+            $responseData = $stm->fetchAll(PDO::FETCH_ASSOC);
+            $msg = "Alumno";
+            break;
+        default:
+            $success = false;
+            $msg = "Acción no válida";
+    }
+} catch (Exception $e) {
+    $success = false;
+    $msg = $e->getMessage();
 }
 
 $json = [
     "success" => $success,
-    "data" => $data
+    "msg" => $msg,
+    "data" => $responseData
 ];
 
-
-// Construción del JSON de respuesta
+// Construcción del JSON de respuesta
 echo json_encode($json);
-
 ?>
