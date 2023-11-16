@@ -25,7 +25,17 @@ class Alumno{
 
     }
 
-    public function delete(){
+    public function delete($dni){
+        try{
+            $db=DB::getInstance();
+            $sql="Delete from alumno where dni=$dni";
+            $stmt = $db->prepare($sql);
+            echo $sql;
+            return $stmt->execute();
+
+        }catch(Exception $e){
+            throw new Exception($e->getMessage());
+        }
         
     }
 

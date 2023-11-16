@@ -1,3 +1,23 @@
+function EliminarAlumno(dni){
+    var url ="Servicio_web_alumnos.php"
+    var data = { action: "Eliminar", dni:dni};
+
+    fetch(url,{
+        method:"POST",
+        body:JSON.stringify(data),
+        headers:{
+            "Content-Type":"application/json",
+        },
+    })
+    .then((res)=>res.json())
+    .then((response)=>{
+
+    })
+    .catch((error) => console.error("Error",error))
+
+
+}
+
 function BuscarAlumno(dni) {
     
     var url = "Servicio_web_alumnos.php";
@@ -89,9 +109,10 @@ function getAlumnos(){
                    var dni_=document.getElementById("dni");
                    dni_.value=dni;
                    BuscarAlumno(dni);
+                }
 
-                   
-
+                eliminar_btn.onclick=function(){
+                    EliminarAlumno(dni);
                 }
                 var editar=editar.appendChild(editar_btn);
                 var eliminar=eliminar.appendChild(eliminar_btn);

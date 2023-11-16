@@ -34,6 +34,10 @@ try {
             $responseData = $stm->fetchAll(PDO::FETCH_ASSOC);
             $msg = "Alumno";
             break;
+        case "Eliminar":
+            $alumno = new Alumno($dni);
+            $success = $alumno->Delete($alumno->dni);
+
         default:
             $success = false;
             $msg = "Acción no válida";
