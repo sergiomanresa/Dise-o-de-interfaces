@@ -1,5 +1,5 @@
 <?php
-require_once 'Silgenton.php';
+require_once 'alumnos.php';
 header('Content-Type: application/json');
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -36,7 +36,7 @@ try {
             break;
         case "Eliminar":
             $alumno = new Alumno($dni);
-            $success = $alumno->Delete($alumno->dni);
+            $success = $alumno->delete();
 
         default:
             $success = false;

@@ -11,7 +11,7 @@ function EliminarAlumno(dni){
     })
     .then((res)=>res.json())
     .then((response)=>{
-
+        
     })
     .catch((error) => console.error("Error",error))
 
@@ -112,7 +112,9 @@ function getAlumnos(){
                 }
 
                 eliminar_btn.onclick=function(){
+                    var dni = this.getAttribute("id");
                     EliminarAlumno(dni);
+                    getAlumnos();
                 }
                 var editar=editar.appendChild(editar_btn);
                 var eliminar=eliminar.appendChild(eliminar_btn);

@@ -25,12 +25,11 @@ class Alumno{
 
     }
 
-    public function delete($dni){
+    public function delete(){
         try{
             $db=DB::getInstance();
-            $sql="Delete from alumno where dni=$dni";
+            $sql="Delete from alumno where dni='$this->dni'";
             $stmt = $db->prepare($sql);
-            echo $sql;
             return $stmt->execute();
 
         }catch(Exception $e){
@@ -40,7 +39,6 @@ class Alumno{
     }
 
     public static function Buscar(){
-        Alumno::Buscar();
     }
 
 }
