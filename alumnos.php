@@ -82,8 +82,6 @@ class Alumno{
         
     }
 
-    public static function Buscar(){
-    }
 
 }
 

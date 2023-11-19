@@ -9,6 +9,17 @@
 </head>
 <body onload="getAlumnos()">
     <h1 id="Titulo">Listado Alumnos</h1>
+
+    <button id="Buscar" onclick="Busqueda()">Buscar</button>
+
+    <form id="formulario_Buscar" style="display: none;">
+        <label>DNI <input type="text" id="dni_busqueda"></label>
+        <label>Nombre <input type="text" id="Nombre_busqueda"></label>
+        <br>
+        <button type="button" onclick="Volver()"> Cerrar </button>
+        <button type="button" onclick="Buscar()">Buscar</button>
+    </form>
+    
     <table id="Table">
         <thead>
             <th>DNI</th>
@@ -26,7 +37,6 @@
     </table>
 
     <button id="insertar" onclick="Insertar()">Insertar</button>
-
     
     <form id="formulario_editar" style="display: none;" onload="BuscarAlumno()">
         <label>DNI <input type="text" id="dni"></label>
