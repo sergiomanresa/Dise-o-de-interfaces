@@ -9,6 +9,14 @@ $action = isset($data['action']) ? $data['action'] : null;
 $limit = isset($data['limit']) ? $data['limit'] : 10;
 
 $dni = isset($data['dni']) ? $data['dni'] : null;
+$nombre = isset($data['nombre']) ? $data['nombre'] : null;
+$apellido_1 = isset($data['apellido_1']) ? $data['apellido_1'] : null;
+$apellido_2 = isset($data['apellido_2']) ? $data['apellido_2'] : null;
+$direccion = isset($data['direccion']) ? $data['direccion'] : null;
+$localidad = isset($data['localidad']) ? $data['localidad'] : null;
+$provincia = isset($data['provincia']) ? $data['provincia'] : null;
+$fecha = isset($data['fecha']) ? $data['fecha'] : null;
+
 
 // valores json
 $msg = null;
@@ -35,8 +43,14 @@ try {
             $msg = "Alumno";
             break;
         case "Eliminar":
-            $alumno = new Alumno($dni);
+            $alumno = new Alumno($dni,$nombre,$apellido_1,$apellido_2,$direccion,$localidad,$provincia,$fecha);
             $success = $alumno->delete();
+            break;
+
+        case "Insert":
+            $alumno = new Alumno($dni,$nombre,$apellido_1,$apellido_2,$direccion,$localidad,$provincia,$fecha);
+            $success = $alumno->Insert();
+            break;
 
         default:
             $success = false;

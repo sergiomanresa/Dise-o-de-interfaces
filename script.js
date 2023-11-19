@@ -6,7 +6,6 @@ function Volver() {
     location.reload();
 }
 
-
 function EliminarAlumno(dni){
     var url ="Servicio_web_alumnos.php"
     var data = { action: "Eliminar", dni:dni};
@@ -20,6 +19,7 @@ function EliminarAlumno(dni){
     })
     .then((res)=>res.json())
     .then((response)=>{
+        location.reload();
     })
     .catch((error) => console.error("Error",error))
 }
@@ -122,7 +122,6 @@ function getAlumnos(){
                 eliminar_btn.onclick=function(){
                     var dni = this.getAttribute("id");
                     EliminarAlumno(dni);
-                    location.reload();
                 }
 
                 var editar=editar.appendChild(editar_btn);
@@ -145,14 +144,45 @@ function getAlumnos(){
     .catch((error) => console.error("Error",error))
 }
 
-function Insertar() {
+function Insert() {
+    var url ="Servicio_web_alumnos.php"
 
+    var dni = document.getElementById("dni").value;
+    var nombre = document.getElementById("Nombre").value;
+    var apellido_1 = document.getElementById("Apellido_1").value;
+    var apellido_2 = document.getElementById("Apellido_2").value;
+    var direccion = document.getElementById("Direccion").value;
+    var localidad = document.getElementById("Localidad").value;
+    var provincia = document.getElementById("Provincia").value;
+    var fecha = document.getElementById("Fecha").value;
+
+    var data ={action:"Insert",dni:dni,nombre:nombre,apellido_1:apellido_1,apellido_2:apellido_2,direccion:direccion,localidad:localidad,provincia:provincia,fecha:fecha};
+    
+    fetch(url,{
+        method:"POST",
+        body:JSON.stringify(data),
+        headers:{
+            "Content-Type":"application/json",
+        },
+    })
+    .then((res)=>res.json())
+    .then((response)=>{
+        if (response.success) {
+            console.log("Inserción exitosa");
+        } else {
+            console.error("Error en la inserción:", response.msg);
+        }
+        
+    })
+    .catch((error) => console.error("Error",error))
+}
+
+function Insertar() {
     document.getElementById("Titulo").textContent = "Insertar nuevo alumno";
     document.getElementById("Table").style.display = "none";
     document.getElementById("limit").style.display = "none";
     document.getElementById("insertar").style.display="none";
     document.getElementById("formulario_editar").style.display = "block";
-   
 }
 
 
