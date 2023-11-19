@@ -49,7 +49,11 @@ try {
 
         case "Insert":
             $alumno = new Alumno($dni,$nombre,$apellido_1,$apellido_2,$direccion,$localidad,$provincia,$fecha);
-            $success = $alumno->Insert();
+            $success = $alumno->insert();
+            break;
+        case "editar":
+            $alumno = new Alumno($dni,$nombre,$apellido_1,$apellido_2,$direccion,$localidad,$provincia,$fecha);
+            $success = $alumno->editar();
             break;
 
         default:

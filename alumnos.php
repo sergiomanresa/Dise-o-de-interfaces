@@ -24,10 +24,29 @@ class Alumno{
 
 
     public function Editar(){
-   
+        try {
+            $db = DB::getInstance();
+            $sql = "UPDATE alumno SET nombre = :nombre, apellido_1 = :apellido_1, apellido_2 = :apellido_2, direccion = :direccion, localidad = :localidad, provincia = :provincia, FECHA_NACIMIENTO = :fecha 
+            WHERE dni = :dni";
+    
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':nombre', $this->nombre);
+            $stmt->bindParam(':apellido_1', $this->apellido_1);
+            $stmt->bindParam(':apellido_2', $this->apellido_2);
+            $stmt->bindParam(':direccion', $this->direccion);
+            $stmt->bindParam(':localidad', $this->localidad);
+            $stmt->bindParam(':provincia', $this->provincia);
+            $stmt->bindParam(':fecha', $this->fecha);
+            $stmt->bindParam(':dni', $this->dni);
+    
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
+    
 
-    public function Insert(){
+    public function insert(){
         try {
             $db = DB::getInstance();
             $sql = "INSERT INTO alumno (DNI, Nombre, Apellido_1, Apellido_2, Direccion, Localidad, Provincia, Fecha_Nacimiento) 

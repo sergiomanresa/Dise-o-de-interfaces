@@ -6,6 +6,35 @@ function Volver() {
     location.reload();
 }
 
+
+function editarAlumno() {
+    var dni=document.getElementById('dni').value
+    var Nombre=document.getElementById('Nombre').value
+    var Apellido_1=document.getElementById('Apellido_1').value
+    var Apellido_2=document.getElementById('Apellido_2').value
+    var Direccion=document.getElementById('Direccion').value
+    var Localidad=document.getElementById('Localidad').value
+    var Provincia=document.getElementById('Provincia').value
+    var Fecha=document.getElementById('Fecha').value
+
+    var url = "Servicio_web_alumnos.php"
+    var data = { action: "editar", dni: dni,nombre:Nombre,apellido_1:Apellido_1,apellido_2:Apellido_2,direccion:Direccion,localidad:Localidad,provincia:Provincia,fecha:Fecha};
+
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((res) => res.json())
+    .then((response) => {
+        location.reload();
+    })
+    .catch((error) => console.error("Error", error));
+}
+
+
 function EliminarAlumno(dni){
     var url ="Servicio_web_alumnos.php"
     var data = { action: "Eliminar", dni:dni};
@@ -113,6 +142,8 @@ function getAlumnos(){
                    document.getElementById("Table").style.display="none";
                    document.getElementById("limit").style.display="none";
                    document.getElementById("Insertar").textContent="Editar";
+                   document.getElementById("Insertar").style.display = "none";
+                   document.getElementById("editar").style.display="block";
                    document.getElementById("formulario_editar").style.display="block";
                    var dni_=document.getElementById("dni");
                    dni_.value=dni;
@@ -184,10 +215,3 @@ function Insertar() {
     document.getElementById("insertar").style.display="none";
     document.getElementById("formulario_editar").style.display = "block";
 }
-
-
-
-
-
-
-
