@@ -24,6 +24,25 @@
         <tbody id="tbody">
         </tbody>
     </table>
+
+    <button id="insertar" onclick="Insertar()">Insertar</button>
+
+    
+    <form id="formulario_editar" style="display: none;" onload="BuscarAlumno()">
+        <label>DNI <input type="text" id="dni"></label>
+        <label>Nombre <input type="text" id="Nombre"></label>
+        <label>Apellido_1 <input type="text" id="Apellido_1"></label>
+        <label>Apellido_2 <input type="text" id="Apellido_2"></label>
+        <label>Direccion <input type="text" id="Direccion"></label>
+        <label>Localidad <input type="text" id="Localidad"></label>
+        <label>Provincia <input type="text" id="Provincia"></label>
+        <label>Fecha de nacimiento <input type="date" id="Fecha"></label>
+        <button type="button" onclick="Insertar()" id="Insertar">Insertar</button>
+        <button type="button" onclick="Volver()">Volver</button>
+    </form>
+    
     <input type="text" id="limit" value="10" id="limit">
+
+    
 </body>
 </html>

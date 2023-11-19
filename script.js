@@ -1,3 +1,54 @@
+function Volver() {
+    document.getElementById("Titulo").textContent = "Lista de alumnos";
+    document.getElementById("Table").style.display = "block";
+    document.getElementById("limit").style.display = "block";
+    document.getElementById("formulario_editar").style.display = "none";
+    location.reload();
+}
+
+
+function EliminarAlumno(dni){
+    var url ="Servicio_web_alumnos.php"
+    var data = { action: "Eliminar", dni:dni};
+
+    fetch(url,{
+        method:"POST",
+        body:JSON.stringify(data),
+        headers:{
+            "Content-Type":"application/json",
+        },
+    })
+    .then((res)=>res.json())
+    .then((response)=>{
+    })
+    .catch((error) => console.error("Error",error))
+}
+
+function BuscarAlumno(dni) {
+    
+    var url = "Servicio_web_alumnos.php";
+    var data = { action: "Buscar", dni:dni};
+
+    fetch(url,{
+        method:"POST",
+        body:JSON.stringify(data),
+        headers:{
+            "Content-Type":"application/json",
+        },
+    })
+    .then((res)=>res.json())
+    .then((response)=>{
+        document.getElementById("Nombre").value = response.data[0].NOMBRE;
+        document.getElementById("Apellido_1").value = response.data[0].APELLIDO_1;
+        document.getElementById("Apellido_2").value = response.data[0].APELLIDO_2
+        document.getElementById("Direccion").value = response.data[0].DIRECCION;
+        document.getElementById("Localidad").value = response.data[0].LOCALIDAD;
+        document.getElementById("Provincia").value = response.data[0].PROVINCIA;
+        document.getElementById("Fecha").value = response.data[0].FECHA_NACIMIENTO;
+    })
+    .catch((error) => console.error("Error",error))
+}
+
 function getAlumnos(){
 
     var url = "Servicio_web_alumnos.php";
@@ -46,16 +97,36 @@ function getAlumnos(){
                 Fecha_de_nacimiento.innerHTML=response.data[i].FECHA_NACIMIENTO;
 
                 var editar = document.createElement("td");
-                var editar_btn = document.createElement("button")
-                editar_btn.innerHTML='editar'
+                var editar_btn = document.createElement("button");
+                editar_btn.setAttribute('id',response.data[i].DNI);
+                editar_btn.innerHTML='editar';
+
+                var eliminar = document.createElement("td");
+                var eliminar_btn = document.createElement("button");
+                eliminar_btn.setAttribute('id',response.data[i].DNI);
+                eliminar_btn.innerHTML='eliminar';
 
                 editar_btn.onclick=function(){
-                   document.getElementById("Titulo").textContent="Editar alumnos"; //TODO: agregar el DNI en el h1
+                    var dni = this.getAttribute("id");
+                   document.getElementById("Titulo").textContent="Editar alumno "+dni; 
+                   document.getElementById("insertar").style.display="none";
                    document.getElementById("Table").style.display="none";
                    document.getElementById("limit").style.display="none";
-                   document.createElement("form")
+                   document.getElementById("Insertar").textContent="Editar";
+                   document.getElementById("formulario_editar").style.display="block";
+                   var dni_=document.getElementById("dni");
+                   dni_.value=dni;
+                   BuscarAlumno(dni);
                 }
+
+                eliminar_btn.onclick=function(){
+                    var dni = this.getAttribute("id");
+                    EliminarAlumno(dni);
+                    location.reload();
+                }
+
                 var editar=editar.appendChild(editar_btn);
+                var eliminar=eliminar.appendChild(eliminar_btn);
 
                 tr.appendChild(dni);
                 tr.appendChild(nombre);
@@ -66,9 +137,27 @@ function getAlumnos(){
                 tr.appendChild(Provincia);
                 tr.appendChild(Fecha_de_nacimiento);
                 tr.appendChild(editar);
+                tr.appendChild(eliminar)
 
                 select.appendChild(tr);
             } 
     })
     .catch((error) => console.error("Error",error))
 }
+
+function Insertar() {
+
+    document.getElementById("Titulo").textContent = "Insertar nuevo alumno";
+    document.getElementById("Table").style.display = "none";
+    document.getElementById("limit").style.display = "none";
+    document.getElementById("insertar").style.display="none";
+    document.getElementById("formulario_editar").style.display = "block";
+   
+}
+
+
+
+
+
+
+

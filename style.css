@@ -17,4 +17,20 @@ h1 {
   td, th {
     border: 1px solid black;
   }
+
+  #formulario_editar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #formulario_editar input {
+    display: block;
+    margin: 10px 0; /* Espacio entre los inputs */
+  }
+  
+
+
+  
   
