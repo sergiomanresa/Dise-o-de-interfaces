@@ -33,66 +33,7 @@ function Buscar() {
     .catch((error) => console.error("Error", error));
 }
 
-function getAlumnos() {
-    var url = "Servicio_web_alumnos.php";
-    var limit = document.getElementById("limit").value;
-    var data = { action: "get", limit: limit };
 
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    .then((res) => res.json())
-    .then((response) => {
-        mostrarAlumnosEnTabla(response.data);
-    })
-    .catch((error) => console.error("Error", error));
-}
-
-function mostrarAlumnosEnTabla(alumnos) {
-    var tbody = document.getElementById("tbody");
-    tbody.innerHTML = "";
-
-    for (var i = 0; i < alumnos.length; i++) {
-        var tr = document.createElement("tr");
-
-        var dni = document.createElement("td");
-        dni.innerHTML = alumnos[i].DNI;
-
-        var nombre = document.createElement("td");
-        nombre.innerHTML = alumnos[i].NOMBRE;
-
-        var editar = document.createElement("td");
-        var editar_btn = document.createElement("button");
-        editar_btn.setAttribute('id', alumnos[i].DNI);
-        editar_btn.innerHTML = 'editar';
-
-        editar_btn.onclick = function () {
-            var dni = this.getAttribute("id");
-            document.getElementById("Titulo").textContent = "Editar alumno " + dni;
-            document.getElementById("insertar").style.display = "none";
-            document.getElementById("Table").style.display = "none";
-            document.getElementById("limit").style.display = "none";
-            document.getElementById("Insertar").textContent = "Editar";
-            document.getElementById("Insertar").style.display = "none";
-            document.getElementById("editar").style.display = "block";
-            document.getElementById("Buscar").style.display = "none";
-            document.getElementById("formulario_editar").style.display = "block";
-            var dni_ = document.getElementById("dni");
-            dni_.value = dni;
-            BuscarAlumno(dni);
-        };
-
-        tr.appendChild(dni);
-        tr.appendChild(nombre);
-        tr.appendChild(editar);
-
-        tbody.appendChild(tr);
-    }
-}
 
 
 function getAlumnos() {
