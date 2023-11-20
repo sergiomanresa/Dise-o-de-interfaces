@@ -48,8 +48,19 @@
         <button type="button" onclick="Insert()" id="Insertar">Insertar</button>
         <button type="button" onclick="volverarFormulario()">Volver</button>
     </form>
-    
-    <input type="text" id="limit" value="10">
-    
+    <div class="paginador">
+        <label for="limit">Mostrar:
+            <select id="limit" name="limit">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+            </select>
+        </label>
+        <button onclick="irAPagina('primera')">Siguiente</button>
+        <button onclick="irAPagina('anterior')">Anterior</button>
+        <input type="number" id="Pagina_actual" value="1" min="1">
+        <button onclick="irAPagina('siguiente')">Siguiente</button>
+        <button onclick="irAPagina('ultima')">Siguiente</button>
+    </div>
 </body>
 </html>
