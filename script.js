@@ -1,16 +1,66 @@
-function Volver() {
-    document.getElementById("Titulo").textContent = "Lista de alumnos";
-    document.getElementById("Table").style.display = "block";
-    document.getElementById("limit").style.display = "block";
+
+function limpiartabla(table){
+    while(table.rows.length > 0){
+        table.deleteRow(0);
+    }
+}
+
+function limpiarFormulario() {
+    var formulario = document.getElementById("formulario_editar");
+
+    for (var i = 0; i < formulario.elements.length; i++) {
+        if (formulario.elements[i].type !== "button") {
+            formulario.elements[i].value = "";
+        }
+    }
+}
+
+
+function volverarFormulario() {
+    limpiarFormulario();
     document.getElementById("formulario_editar").style.display = "none";
-    document.getElementById("formulario_Buscar").style.display = "none";
-    location.reload();
+    document.getElementById("formulario_Buscar").style.display = "block";
+    document.getElementById("Table").style.display = "revert";
+    document.getElementById("limit").style.display = "block";
+    document.getElementById("insertar").style.display = "block";
+    document.getElementById("Titulo").textContent = "Listado Alumnos";
+}
+
+
+
+function editarAlumno() {
+    var dni=document.getElementById('dni').value
+    var Nombre=document.getElementById('Nombre').value
+    var Apellido_1=document.getElementById('Apellido_1').value
+    var Apellido_2=document.getElementById('Apellido_2').value
+    var Direccion=document.getElementById('Direccion').value
+    var Localidad=document.getElementById('Localidad').value
+    var Provincia=document.getElementById('Provincia').value
+    var Fecha=document.getElementById('Fecha').value
+
+    var url = "Servicio_web_alumnos.php"
+    var data = { action: "editar", dni: dni,nombre:Nombre,apellido_1:Apellido_1,apellido_2:Apellido_2,direccion:Direccion,localidad:Localidad,provincia:Provincia,fecha:Fecha};
+
+    fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    .then((res) => res.json())
+    .then((response) => {
+        limpiarFormulario();
+        volverarFormulario();
+    })
+    .catch((error) => console.error("Error", error));
 }
 
 function Busqueda(){
     document.getElementById("formulario_Buscar").style.display = "block";
     document.getElementById("Buscar").style.display = "none";
 }
+
 function Buscar() {
     var dni = document.getElementById('dni_busqueda').value;
     var Nombre = document.getElementById('Nombre_busqueda').value;
@@ -32,9 +82,6 @@ function Buscar() {
     })
     .catch((error) => console.error("Error", error));
 }
-
-
-
 
 function getAlumnos() {
     var url = "Servicio_web_alumnos.php";
@@ -101,8 +148,8 @@ function mostrarAlumnosEnTabla(alumnos) {
             document.getElementById("Insertar").textContent = "Editar";
             document.getElementById("Insertar").style.display = "none";
             document.getElementById("editar").style.display = "block";
-            document.getElementById("Buscar").style.display = "none";
             document.getElementById("formulario_editar").style.display = "block";
+            document.getElementById("formulario_Buscar").style.display ="none";
             var dni_ = document.getElementById("dni");
             dni_.value = dni;
             BuscarAlumno(dni);
@@ -134,11 +181,9 @@ function mostrarAlumnosEnTabla(alumnos) {
     }
 }
 
-
-
-
 function EliminarAlumno(dni){
     var url ="Servicio_web_alumnos.php"
+    var tabla= document.getElementById("tbody");
     var data = { action: "Eliminar", dni:dni};
 
     fetch(url,{
@@ -150,7 +195,8 @@ function EliminarAlumno(dni){
     })
     .then((res)=>res.json())
     .then((response)=>{
-        location.reload();
+        limpiartabla(tabla)
+        getAlumnos()
     })
     .catch((error) => console.error("Error",error))
 }
@@ -180,104 +226,6 @@ function BuscarAlumno(dni) {
     .catch((error) => console.error("Error",error))
 }
 
-function getAlumnos(){
-
-    var url = "Servicio_web_alumnos.php";
-    var limit =document.getElementById("limit").value;
-    var data = { action: "get", limit: limit};
- 
-
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { 
-            "Content-Type":"application/json",
-        },
-    })
-    .then((res) => res.json())
-   
-    .then((response) => {
-        
-        var select = document.getElementById("tbody");
-
-        for (var i = 0; i < response.data.length; i++) {
-            var tr = document.createElement("tr");
-
-                var dni = document.createElement("td");
-                dni.innerHTML=response.data[i].DNI;
-            
-                var  nombre= document.createElement("td");
-                nombre.innerHTML=response.data[i].NOMBRE;
-
-                var apellido_1 = document.createElement("td");
-                apellido_1.innerHTML=response.data[i].APELLIDO_1;
-
-                var apellido_2= document.createElement("td");
-                apellido_2.innerHTML=response.data[i].APELLIDO_2;
-
-                var direccion= document.createElement("td");
-                direccion.innerHTML=response.data[i].DIRECCION;
-
-                var Localidad = document.createElement("td");
-                Localidad.innerHTML=response.data[i].LOCALIDAD;
-
-                var Provincia = document.createElement("td");
-                Provincia.innerHTML=response.data[i].PROVINCIA;
-
-                var Fecha_de_nacimiento = document.createElement("td");
-                Fecha_de_nacimiento.innerHTML=response.data[i].FECHA_NACIMIENTO;
-
-                var editar = document.createElement("td");
-                var editar_btn = document.createElement("button");
-                editar_btn.setAttribute('id',response.data[i].DNI);
-                editar_btn.innerHTML='editar';
-
-                var eliminar = document.createElement("td");
-                var eliminar_btn = document.createElement("button");
-                eliminar_btn.setAttribute('id',response.data[i].DNI);
-                eliminar_btn.innerHTML='eliminar';
-
-                editar_btn.onclick=function(){
-                    var dni = this.getAttribute("id");
-                   document.getElementById("Titulo").textContent="Editar alumno "+dni; 
-                   document.getElementById("insertar").style.display="none";
-                   document.getElementById("Table").style.display="none";
-                   document.getElementById("limit").style.display="none";
-                   document.getElementById("Insertar").textContent="Editar";
-                   document.getElementById("Insertar").style.display = "none";
-                   document.getElementById("editar").style.display="block";
-                   document.getElementById("Buscar").style.display="none";
-                   document.getElementById("formulario_editar").style.display="block";
-                   var dni_=document.getElementById("dni");
-                   dni_.value=dni;
-                   BuscarAlumno(dni);
-                }
-
-                eliminar_btn.onclick=function(){
-                    var dni = this.getAttribute("id");
-                    EliminarAlumno(dni);
-                }
-
-                var editar=editar.appendChild(editar_btn);
-                var eliminar=eliminar.appendChild(eliminar_btn);
-
-                tr.appendChild(dni);
-                tr.appendChild(nombre);
-                tr.appendChild(apellido_1);
-                tr.appendChild(apellido_2);
-                tr.appendChild(direccion);
-                tr.appendChild(Localidad);
-                tr.appendChild(Provincia);
-                tr.appendChild(Fecha_de_nacimiento);
-                tr.appendChild(editar);
-                tr.appendChild(eliminar)
-
-                select.appendChild(tr);
-            } 
-    })
-    .catch((error) => console.error("Error",error))
-}
-
 function Insert() {
     var url ="Servicio_web_alumnos.php"
 
@@ -289,6 +237,7 @@ function Insert() {
     var localidad = document.getElementById("Localidad").value;
     var provincia = document.getElementById("Provincia").value;
     var fecha = document.getElementById("Fecha").value;
+    
 
     var data ={action:"Insert",dni:dni,nombre:nombre,apellido_1:apellido_1,apellido_2:apellido_2,direccion:direccion,localidad:localidad,provincia:provincia,fecha:fecha};
     
@@ -317,4 +266,5 @@ function Insertar() {
     document.getElementById("limit").style.display = "none";
     document.getElementById("insertar").style.display="none";
     document.getElementById("formulario_editar").style.display = "block";
+    document.getElementById("formulario_Buscar").style.display = "none";
 }

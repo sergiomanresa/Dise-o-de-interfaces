@@ -10,13 +10,10 @@
 <body onload="getAlumnos()">
     <h1 id="Titulo">Listado Alumnos</h1>
 
-    <button id="Buscar" onclick="Busqueda()">Buscar</button>
-
-    <form id="formulario_Buscar" style="display: none;">
+    <form id="formulario_Buscar">
         <label>DNI <input type="text" id="dni_busqueda"></label>
         <label>Nombre <input type="text" id="Nombre_busqueda"></label>
         <br>
-        <button type="button" onclick="Volver()"> Cerrar </button>
         <button type="button" onclick="Buscar()">Buscar</button>
     </form>
     
@@ -49,12 +46,10 @@
         <label>Fecha de nacimiento <input type="date" id="Fecha"></label>
         <button type="button" onclick="editarAlumno()" id="editar" style="display: none;">Editar</button>
         <button type="button" onclick="Insert()" id="Insertar">Insertar</button>
-        <button type="button" onclick="Volver()">Volver</button>
+        <button type="button" onclick="volverarFormulario()">Volver</button>
     </form>
     
-    
     <input type="text" id="limit" value="10">
-
     
 </body>
 </html>
