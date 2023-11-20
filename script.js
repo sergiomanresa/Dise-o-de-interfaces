@@ -26,7 +26,9 @@ function volverarFormulario() {
     document.getElementById("Titulo").textContent = "Listado Alumnos";
 }
 
+function irAPagina(accion){
 
+}
 
 function editarAlumno() {
     var dni=document.getElementById('dni').value
