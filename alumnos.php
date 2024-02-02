@@ -2,14 +2,14 @@
 require_once 'Silgenton.php';
 
 class Alumno{
-    public $dni;
-    public $nombre;
-    public $apellido_1;
-    public $apellido_2;
-    public $direccion;
-    public $localidad; 
-    public $provincia;
-    public $fecha;
+    private $dni;
+    private $nombre;
+    private $apellido_1;
+    private $apellido_2;
+    private $direccion;
+    private $localidad; 
+    private $provincia;
+    private $fecha;
 
     public function __construct($dni, $nombre, $apellido_1, $apellido_2, $direccion, $localidad, $provincia, $fecha) {
         $this->dni = $dni;
